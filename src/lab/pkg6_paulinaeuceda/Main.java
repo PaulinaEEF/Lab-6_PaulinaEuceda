@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -252,9 +253,12 @@ public class Main extends javax.swing.JFrame {
 
     private void jb_sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_sendMouseClicked
         // TODO add your handling code here:
+
         boolean flag = true;
         oracion = ta_maquina.getText();
+        String completa = oracion;
         String todo = oracion.substring(0, oracion.length() - 2);
+
 
         int pos = oracion.indexOf(':');
         oracion = oracion.substring(pos + 2, oracion.length());
@@ -268,17 +272,30 @@ public class Main extends javax.swing.JFrame {
         System.out.println(tempo);
         oracion = tempo;
 
-        switch (o.charAt(po)) {
+        int n = o.charAt(po);
+
+        try {
+            int posi = completa.indexOf("4");
+            antes = completa.substring(pos+2, posi - 1);
+            despues = completa.substring(posi+2, completa.length() - 1);
+            n = 52;
+        } catch (Exception e) {
+
+        }
+
+        switch (n) {
             case 49:
-                uno();
+                Primero();
                 break;
             case 50:
-                ReplaceAscii();
+                Segundo();
                 break;
             case 51:
-                tres();
+                Tercero();
                 break;
             case 52:
+                trabason();
+                Cuarto();
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "No existe esa opcion");
@@ -361,7 +378,85 @@ public class Main extends javax.swing.JFrame {
         jd_registrar.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
 
-    public void tres() {
+    public void trabason() {
+        cadena = antes;
+
+        String o = "";
+
+        for (int i = 0; i < cadena.length(); i++) {
+            if (cadena.charAt(i) != ' ') {
+                o += cadena.charAt(i);
+            }
+        }
+        cadena = o;
+
+    }
+
+    public void Cuarto() {
+
+        String clave = despues;
+
+        int largo = cadena.length() / clave.length();
+        if ((cadena.length()) % clave.length() == 0) {
+
+        } else {
+            largo += 2;
+
+        }
+
+        char[][] matriz = new char[largo][clave.length()];
+        int con = 0;
+        int cont = 0;
+        for (int i = 0; i < largo; i++) {
+            for (int j = 0; j < clave.length(); j++) {
+                if (con < cadena.length() && i > 0) {
+                    matriz[i][j] = cadena.charAt(con);
+                    System.out.print(matriz[i][j] + " ");
+                    con++;
+                } else if (con > cadena.length() && i > 0) {
+                    matriz[i][j] = ' ';
+                }
+                if (i == 0) {
+                    matriz[i][j] = clave.charAt(cont);
+                    cont++;
+                    System.out.print(matriz[i][j] + " ");
+
+                }
+            }
+            System.out.println("");
+        }
+
+        char[] original = new char[clave.length()];
+        for (int i = 0; i < clave.length(); i++) {
+            original[i] = clave.charAt(i);
+        }
+        Arrays.sort(original);
+
+        cadenaFinal = "";
+
+        int conta = 0;
+        while (conta < clave.length()) {
+            for (int j = 0; j < clave.length(); j++) {
+                if (matriz[0][j] == original[conta]) {
+                    for (int i = 1; i < largo; i++) {
+                        cadenaFinal += matriz[i][j];
+                    }
+                    conta++;
+                    break;
+                }
+            }
+        }
+
+        System.out.println(cadenaFinal);
+
+        System.out.println("");
+        for (int i = 0; i < original.length; i++) {
+            System.out.print(original[i] + " ");
+        }
+
+    }
+
+    public void Tercero() {
         cadenaFinal = "";
         String cadena = oracion;
 
@@ -389,7 +484,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public void uno() {
+    public void Primero() {
         cadenaFinal = "";
         String cadena = oracion;
         cadena = cadena.toLowerCase();
@@ -424,7 +519,7 @@ public class Main extends javax.swing.JFrame {
 
     }
 
-    public void ReplaceAscii() {
+    public void Segundo() {
         cadenaFinal = "";
         String chain = oracion;
         char c;
@@ -518,5 +613,7 @@ public class Main extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     String nombre, cadenaFinal;
     Scanner lea = new Scanner(System.in);
-    String oracion;
+    String oracion, antes, despues;
+    String cadena;
+    char[] original;
 }
