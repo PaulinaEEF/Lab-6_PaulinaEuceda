@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package lab.pkg6_paulinaeuceda;
-
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
