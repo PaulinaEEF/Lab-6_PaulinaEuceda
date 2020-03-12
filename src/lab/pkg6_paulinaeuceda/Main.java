@@ -304,7 +304,7 @@ public class Main extends javax.swing.JFrame {
 
         if (flag == true) {
             ta_chat.setText(todo + "\n" + "Maquina: " + cadenaFinal);
-
+            System.out.println("");
             String mensaje = ta_chat.getText();
             String archivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo");
             System.out.println(archivo);
